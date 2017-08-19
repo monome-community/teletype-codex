@@ -1,0 +1,127 @@
+ORCA TELETYPE VERSION
+
+
+
+#1
+L 0 3 : PN 1 I RRAND 1 8
+
+#2
+L 0 3 : PN 2 I RRAND 0 7
+
+#3
+C WRAP SUB C 1 0 15
+
+#4
+C WRAP ADD C 1 0 15
+
+#5
+X ADD I 4
+D DIV ADD A PN 2 I PN 1 I
+PN 2 X MOD D 2
+D MUL PN 2 X PN 1 X
+PN 3 ADD I 8 D
+
+#6
+O LSH SUB I 1 2
+D MUL PN 3 O PN 3 8
+D ADD D MUL PN 3 O PN 3 9
+D ADD D MUL PN 3 O PN 3 10
+D ADD D MUL PN 3 O PN 3 11
+PN 3 ADD 11 I D
+
+#7
+IF PN 2 4 : TR.PULSE 1
+IF PN 2 5 : TR.PULSE 2
+D MOD ADD C PN 3 12 16
+CV 1 N PN 0 D
+D MOD ADD C PN 3 13 16
+CV 2 N PN 0 D
+
+#8
+B 16
+P.N 1
+L 0 3 : P I LSH 1 I
+L 0 3 : P ADD 4 I LSH 1 I
+L 0 3 : PN 2 I 0
+L 0 7 : PN 3 I 1
+
+#M
+A MOD ADD A 1 B
+L 0 3 : SCRIPT 5
+L 1 2 : SCRIPT 6
+SCRIPT 7
+
+#I
+A 0
+C 0
+
+#P
+64	8	0	4
+1	1	1	1
+0	0	0	0
+63	63	63	63
+
+0	1	1	1
+2	6	5	0
+4	6	4	0
+5	8	2	1
+7	1	0	0
+9	2	1	0
+10	4	1	1
+12	8	0	1
+14	8	0	0
+16	8	0	2
+17	0	0	4
+19	0	0	0
+21	0	0	0
+22	0	0	4
+24	0	0	0
+26	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0

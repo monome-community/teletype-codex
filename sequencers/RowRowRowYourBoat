@@ -1,0 +1,234 @@
+Row Row Row Your Boat
+in 4 voices.
+Version 2
+
+CV - voltage/octave, lasts for
+     whole note length.
+TR - gate for note, ends 20ms
+     short of note. 
+
+CV/TR/PN 1 - Voice 1
+CV/TR/PN 2 - Voice 2
+CV/TR/PN 3 - Voice 3
+CV/TR/PN 4 - Voice 4
+
+Each pattern consists of a
+note to play followed by the
+length of the note.
+
+The maximum sequence length is
+32 notes.
+
+Each note may be up to 127
+metronome intervals long. 
+
+In this example an 8th note is
+1 interval long.
+
+Obscure Constants
+(AKA Magic Numbers)
+0
+      Lowest note
+
+7
+    Number of bits used for
+    Length of note in x & y
+
+8
+    Number of bits reserved
+    For each voice in x & y
+
+127
+    Highest note
+
+127
+    Longest note length
+
+200 - 255
+    Note range of rests
+
+255 binary 11111111
+    Mask value for voice 1 & 3
+
+256
+    Voice 2 & 4 shift value,
+    this allows x/y to track
+    two voices each
+    * 256 i = << i 8
+
+257 = + 256 1 binary 100000001
+    Value added to x(y) to
+    increase time waited in
+    both voices 1 & 3 (2 & 4)
+
+17340 = n 200
+    Lowest volt for rest
+
+32512 = << 255 8
+    Vask value for voice 2 & 4
+
+32639 binary 1000000010000000
+    Mask to prevent overflow
+    after adding 1 to a voice
+
+Example specific magic numbers
+20
+    Amount in ms to reduce
+    trigger to allow envelope
+    shaping
+
+250
+    Reasonable song speed
+
+28019
+    Start voice 3 after 13
+    metronome triggers,
+    start voice 4 after 19
+    metronome triggers
+
+31103
+    Start voice 1 on first
+    metronome trigger,
+    start voice 2 after 7
+    metronome triggers
+
+#1
+IF NZ & X 127: BREAK
+J N PN.NEXT 0; K PN.NEXT 0
+X | X + 1 - 127 K; K * K M
+IF GTE J 17340: BREAK
+TR.TIME 1 - K 20; CV 1 J; TR.P 1
+
+#2
+IF NZ & X 32512: BREAK
+J N PN.NEXT 1; K PN.NEXT 1
+X | X * 256 + 1 - 127 K; K * K M
+IF GTE J 17340: BREAK
+TR.TIME 2 - K 20; CV 2 J; TR.P 2
+
+#3
+IF NZ & Y 127: BREAK
+J N PN.NEXT 2; K PN.NEXT 2
+Y | Y + 1 - 127 K; K * K M
+IF GTE J 17340: BREAK
+TR.TIME 3 - K 20; CV 3 J; TR.P 3
+
+#4
+IF NZ & Y 32512: BREAK
+J N PN.NEXT 3; K PN.NEXT 3
+Y | Y * 256 + 1 - 127 K; K * K M
+IF GTE J 17340: BREAK
+TR.TIME 4 - K 20; CV 4 J; TR.P 4
+
+#5
+
+#6
+
+#7
+
+#8
+
+#M
+X & 32639 + X 257
+Y & 32639 + Y 257
+$ 1; $ 2; $ 3; $ 4
+
+#I
+PN.I 0 PN.END 0; PN.I 1 PN.END 1
+PN.I 2 PN.END 2; PN.I 3 PN.END 3
+CV 1 0; CV 2 0; CV 3 0; CV 4 0
+Y 28019; X 31103; M 250
+
+#P
+54	54	54	54
+1	1	1	1
+0	0	0	0
+53	53	53	53
+
+60	60	60	60
+3	3	3	3
+60	60	60	60
+3	3	3	3
+60	60	60	60
+2	2	2	2
+61	61	61	61
+1	1	1	1
+62	62	62	62
+3	3	3	3
+62	62	62	62
+2	2	2	2
+61	61	61	61
+1	1	1	1
+62	62	62	62
+2	2	2	2
+63	63	63	63
+1	1	1	1
+64	64	64	64
+5	5	5	5
+67	67	67	67
+1	1	1	1
+67	67	67	67
+1	1	1	1
+67	67	67	67
+1	1	1	1
+64	64	64	64
+1	1	1	1
+64	64	64	64
+1	1	1	1
+64	64	64	64
+1	1	1	1
+62	62	62	62
+1	1	1	1
+62	62	62	62
+1	1	1	1
+62	62	62	62
+1	1	1	1
+60	60	60	60
+1	1	1	1
+60	60	60	60
+1	1	1	1
+60	60	60	60
+1	1	1	1
+64	64	64	64
+2	2	2	2
+63	63	63	63
+1	1	1	1
+62	62	62	62
+2	2	2	2
+61	61	61	61
+1	1	1	1
+60	60	60	60
+3	3	3	3
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+
+#G
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0

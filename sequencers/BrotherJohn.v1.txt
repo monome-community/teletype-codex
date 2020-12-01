@@ -24,12 +24,12 @@ PARAM - 0 through M/2
     Amount to reduce gate time
     used to allow envelop decay
 
-Each pattern consists of a
-note to play followed by the
-length of the note.
+Each pattern entry consists of 
+both note play (shifted 8 bits
+left) and length of the note.
 
 The maximum sequence length is
-32 notes.
+62 notes.
 
 #1
 A + A 12
@@ -186,9 +186,6 @@ A -24; B -24
 Each note may be up to 127
 metronome intervals long. 
 
-In this example an 8th note is
-1 interval long.
-
 Obscure Constants
 (AKA Magic Numbers)
 0
@@ -208,11 +205,11 @@ Obscure Constants
 127
     Longest note length
 
+127 binary 01111111
+    Mask value for voice 1 & 3
+
 200 - 255
     Note range of rests
-
-255 binary 11111111
-    Mask value for voice 1 & 3
 
 256
     Voice 2 & 4 shift value,
@@ -233,19 +230,22 @@ Obscure Constants
     after adding 1 to a voice
 
 Example specific magic numbers
+In this example an 8th note is
+1 metronome interval long.
+
 250
     Reasonable song speed
 
 29550
-    Start voice 3 after 9
+    Start voice 3 after 8
     metronome triggers,
-    start voice 4 after 13
+    start voice 4 after 12
     metronome triggers
     (127-12)* 256 + (127 - 8)
 
 31615
     Start voice 1 on first
     metronome trigger,
-    start voice 2 after 5
+    start voice 2 after 4
     metronome triggers
     (127-4)* 256 + (127 - 1)

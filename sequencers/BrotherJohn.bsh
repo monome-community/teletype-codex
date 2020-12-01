@@ -1,0 +1,54 @@
+#!/bin/bash
+#set -x
+Octive=4
+
+while read Note Length; do
+  if [[ $Length -lt   1 ||
+        $Length -gt 127   ]]; then
+    echo "Invalid length: $Length"
+    continue
+  fi
+
+  OldOctive=$Octive
+  while [[ $Note == [+]* ]]; do
+    ((Octive = Octive + 1))
+    Note=${Note#+}
+  done
+  
+  while [[ $Note == [-]* ]]; do
+    ((Octive = Octive - 1))  
+    Note=${Note#-}
+  done
+
+  if [[ $Note != [a-gA-G]     &&
+        $Note != [a-gA-G][b#]   ]]; then
+    echo "Invalid note: $Note"
+    Octive=$OldOctive
+    continue
+  fi
+
+  Value=0
+  case $Note in
+    ([aA]b) Value=8;;
+    ([aA])  Value=9;;
+    ([aA]#) Value=10;;
+    ([bB]b) Value=10;;
+    ([bB])  Value=11;;
+    ([cC])  ;;
+    ([cC]#) value=1;;
+    ([dD]b) Value=1;;
+    ([dD])  Value=2;;
+    ([dD]#) Value=3;;
+    ([eE]b) Value=3;;
+    ([eE])  Value=4;;
+    ([eE]#) Value=5;;
+    ([fF]b) Value=5;;
+    ([fF])  Value=6;;
+    ([gG])  Value=7;;
+    ([gG]#) Value=8;;
+  esac
+
+  ((Data = ((Octive + 1) * 12 + Value) * 256 + Length))
+  echo "Octive: $Octive, Note: $Note, Length: $Length = $Data"
+
+done

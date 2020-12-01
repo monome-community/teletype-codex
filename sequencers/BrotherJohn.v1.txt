@@ -1,0 +1,251 @@
+Brother John
+in 4 voices.
+Version 1
+
+TR 1 - Voice 1&3 up an octave
+
+TR 2 - Voice 1&3 down an octave
+
+TR 3 - Voice 2&4 up an octave
+
+TR 4 - Voice 2&4 down an octave
+
+CV - voltage/octave, lasts for
+     whole note length.
+TR - gate for note, ends 20ms
+     short of note. 
+
+CV/TR/PN 1 - Voice 1
+CV/TR/PN 2 - Voice 2
+CV/TR/PN 3 - Voice 3
+CV/TR/PN 4 - Voice 4
+
+PARAM - 0 through M/2
+    Amount to reduce gate time
+    used to allow envelop decay
+
+Each pattern entry consists of 
+both note play (shifted 8 bits
+left) and length of the note.
+
+The maximum sequence length is
+62 notes.
+
+#1
+A + A 12
+
+#2
+A - A 12
+
+#3
+B + B 12
+
+#4
+B - B 12
+
+#5
+IF NZ & X 127: BREAK
+I PN.NEXT 0; K & I 127
+X | X - 128 K; J RSH I 8
+IF GTE J 200: BREAK
+J N + J A; K * K M
+TR.TIME 1 - K T; CV 1 J; TR.P 1
+
+#6
+IF NZ & X 32512: BREAK
+I PN.NEXT 1; K & I 127
+X | X * 256 - 128 K; J RSH I 8
+IF GTE J 200: BREAK
+J N + J B; K * K M
+TR.TIME 2 - K T; CV 2 J; TR.P 2
+
+#7
+IF NZ & Y 127: BREAK
+I PN.NEXT 2; K & I 127
+Y | Y - 128 K; J RSH I 8
+IF GTE J 200: BREAK
+J N + J A; K * K M
+TR.TIME 3 - K T; CV 3 J; TR.P 3
+
+#8
+IF NZ & Y 32512: BREAK
+I PN.NEXT 3; K & I 127
+Y | Y * 256 - 128 K; J RSH I 8
+IF GTE J 200: BREAK
+J N + J B; K * K M
+TR.TIME 4 - K T; CV 4 J; TR.P 4
+
+#M
+X & 32639 + X 257
+Y & 32639 + Y 257
+$ 5; $ 6; $ 7; $ 8
+T SCALE 0 16383 0 / M 2 PARAM
+
+#I
+PN.I 0 PN.END 0; PN.I 1 PN.END 1
+PN.I 2 PN.END 2; PN.I 3 PN.END 3
+CV 1 0; CV 2 0; CV 3 0; CV 4 0
+Y 29559; X 31615; M 250
+A -24; B -24
+
+#P
+32	32	32	32
+1	1	1	1
+0	0	0	0
+31	31	31	31
+
+13826	13826	13826	13826
+14082	14082	14082	14082
+14594	14594	14594	14594
+13826	13826	13826	13826
+13826	13826	13826	13826
+14082	14082	14082	14082
+14594	14594	14594	14594
+13826	13826	13826	13826
+14594	14594	14594	14594
+14850	14850	14850	14850
+15364	15364	15364	15364
+14594	14594	14594	14594
+14850	14850	14850	14850
+15364	15364	15364	15364
+15361	15361	15361	15361
+15873	15873	15973	15873
+15361	15361	15361	15361
+14849	14849	14849	14849
+14594	14594	14594	14594
+13826	13826	13826	13826
+15361	15361	15361	15361
+15873	15873	15873	15873
+15361	15361	15361	15361
+14849	14849	14849	14849
+14594	14594	14594	14594
+13826	13826	13826	13826
+13826	13826	13826	13826
+12290	12290	12290	12290
+13828	13828	13828	13828
+13826	13826	13826	13826
+12290	12290	12290	12290
+13828	13828	13828	13828
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+
+#G
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+
+-----------------------------------
+Each note may be up to 127
+metronome intervals long. 
+
+Obscure Constants
+(AKA Magic Numbers)
+0
+      Lowest note
+
+7
+    Number of bits used for
+    Length of note in x & y
+
+8
+    Number of bits reserved
+    For each voice in x & y
+
+127
+    Highest note
+
+127
+    Longest note length
+
+127 binary 01111111
+    Mask value for voice 1 & 3
+
+200 - 255
+    Note range of rests
+
+256
+    Voice 2 & 4 shift value,
+    this allows x/y to track
+    two voices each
+    * 256 i = << i 8
+
+257 = + 256 1 binary 100000001
+    Value added to x(y) to
+    increase time waited in
+    both voices 1 & 3 (2 & 4)
+
+32512 = << 255 8
+    Mask value for voice 2 & 4
+
+32639 binary 1000000010000000
+    Mask to prevent overflow
+    after adding 1 to a voice
+
+Example specific magic numbers
+In this example an 8th note is
+1 metronome interval long.
+
+250
+    Reasonable song speed
+
+29550
+    Start voice 3 after 8
+    metronome triggers,
+    start voice 4 after 12
+    metronome triggers
+    (127-12)* 256 + (127 - 8)
+
+31615
+    Start voice 1 on first
+    metronome trigger,
+    start voice 2 after 4
+    metronome triggers
+    (127-4)* 256 + (127 - 1)

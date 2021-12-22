@@ -1,0 +1,176 @@
+tricéphale: a pentatonic generative sequencer with three playheads for teletype and grid
+
+sixteen step sequencer
+five note scale available for each step, default is pentatonic major
+playheads 1-3 move independently and are advanced via triggers 1-3
+
+the first three buttons on the first row toggle generative functionality
+button 1: if on, every 32 times any note is played, a random step is replaced with a new note
+button 2: if on, every 32nd note a random step in the sequence is toggled on or off
+button 3: if on, every 64th step in the sequence will move up or down one position in the circle of fifths
+
+the twelve button fader on the top row changes the key of scale. it is set as the circle of fifths, starting with c
+
+for the second row and below, each column represents a step in the sequence
+
+the buttons on row two enable or disable a step in the sequence. if the step is enabled it plays when the playhead reaches it. if it is disabled, a note will not be played during that step.
+
+the bottom five rows hold a five button fader in each column. the five buttons in the fader set the note to play
+
+--
+TRICEPHALE
+3-HEAD PENTATONIC SEQUENCER
+TRIGS 1-3 ADVANCE PLAYHEADS
+USE WITH GRID
+
+
+
+#1
+A WRAP + A 1 0 15
+IF G.FDR.EN A: Y A; X 1; $ 5
+$ 6
+EVERY 64: $ 4
+
+#2
+B WRAP + B 1 0 15
+IF G.FDR.EN B: Y B; X 2; $ 5
+$ 6
+
+#3
+C WRAP + C 1 0 15
+IF G.FDR.EN C: Y C; X 3; $ 5
+$ 6
+
+#4
+I + G.FDR.N 16 RRAND -1 1
+DRUNK WRAP I 0 11
+IF G.BTN.V 2: G.FDR.N 16 DRUNK
+
+#5
+I + PN 1 G.FDR.N 16 0
+CV X N + P G.FDR.N Y I; TR.P X
+
+#6
+G.CLR; G.REC A 3 1 5 -3 8
+G.REC B 3 1 5 -3 6
+G.REC C 3 1 5 -3 4
+EVERY 32: $ 7
+
+#7
+I G.BTN.V 0
+IF I: G.FDR.N RAND 15 RAND 4
+I G.BTN.V 1
+IF I: G.BTN.PR RRAND 32 47 1
+
+#8
+I - G.BTNI 32
+G.FDR.EN I EZ G.FDR.EN I
+
+#M
+L 0 15: G.FDR.EN I 0
+L 32 47: G.BTN.PR I 0
+L 0 2: G.BTN.PR I 0
+DRUNK.MAX 11; DRUNK.WRAP 1
+DRUNK 0; Z 0; D 0
+
+#I
+G.RST; PN.L 0 5; PN.L 1 12
+G.FDX 0 0 3 1 5 1 0 0 16 1
+G.BTX 0 0 0 1 1 1 6 0 3 1
+G.FDR 16 4 0 PN.L 1 1 2 6 0
+G.BTX 32 0 1 1 1 1 6 8 16 1
+A 0; B 0; C 0; M.ACT 0; $ 9
+
+#P
+5	12	0	0
+1	1	1	1
+0	0	0	0
+63	63	63	63
+
+0	0	0	0
+2	7	0	0
+5	2	0	0
+6	9	0	0
+8	4	0	0
+0	11	0	0
+0	6	0	0
+0	1	0	0
+0	8	0	0
+0	3	0	0
+0	10	0	0
+0	5	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+0	0	0	0
+
+#G
+1110000000000000
+0000000000000000
+1001000110000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+0000000000000000
+
+4	3	3	3	0	3	3	1	1	3	0	0	3	3	0	0
+11	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
